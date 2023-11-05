@@ -40,3 +40,9 @@ if (n === innerHTML.length) {
     contents.innerHTML = innerHTML[n];
     document.cookie = `n=${n+1}`;
 }
+
+if (n < 11) {
+  document.getElementById('jumpscare').remove();
+} else {
+  document.getElementsByTagName('body')[0].classList.add('lightning');
+}

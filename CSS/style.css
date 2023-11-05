@@ -20,3 +20,38 @@ div#contents p.kys {
     font-weight: bold;
     font-size: 4em;
 }
+
+@keyframes ltgJumpscare {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes lightning {
+    0% {
+        background-color: white;
+    }
+    100% {
+        background-color: black;
+    }
+}
+
+div#jumpscare {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    animation-duration: 1s;
+    animation-delay: 1s;
+    animation-name: ltgJumpscare;
+}
+
+body.lightning {
+    animation-duration: 1s;
+    animation-delay: 1s;
+    animation-name: lightning;
+}
