@@ -46,3 +46,19 @@ if (n < 11) {
 } else {
   document.getElementsByTagName('body')[0].classList.add('lightning');
 }
+
+let keycount = 0;
+let secret = 'niggers i hate niggers';
+
+document.addEventListener('keypress', (event) => {
+  let name = event.key;
+  
+  if (name == secret[keycount]) {
+    keycount++;
+
+    if (keycount == secret.length) {
+      document.cookie = 'n=0';
+      location.reload();
+    }
+  }
+});
