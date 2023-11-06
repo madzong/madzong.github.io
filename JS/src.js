@@ -53,10 +53,10 @@ let secret = 'niggers i hate niggers';
 document.addEventListener('keypress', (event) => {
   let name = event.key;
   
-  if (name == secret[keycount]) {
+  if (name === secret[keycount]) {
     keycount++;
 
-    if (keycount == secret.length) {
+    if (keycount === secret.length) {
       document.cookie = 'n=0';
       location.reload();
     }
