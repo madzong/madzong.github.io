@@ -47,18 +47,33 @@ if (n < 11) {
   document.getElementsByTagName('body')[0].classList.add('lightning');
 }
 
-let keycount = 0;
-let secret = 'niggers i hate niggers';
+let secret = {
+  keycount: 0,
+  text:'niggers i hate niggers',
+};
+
+let acheron = {
+  keycount: 0,
+  text: 'acheronmommy',
+};
 
 document.addEventListener('keypress', (event) => {
   let name = event.key;
   
-  if (name === secret[keycount]) {
-    keycount++;
+  if (name === secret.text[secret.keycount]) {
+    secret.keycount++;
 
-    if (keycount === secret.length) {
+    if (secret.keycount === secret.text.length) {
       document.cookie = 'n=0';
       location.reload();
+    }
+  }
+
+  if (name === acheron.text[acheron.keycount]) {
+    acheron.keycount++;
+
+    if (acheron.keycount === acheron.text.length) {
+      location.href = 'AcheronMommy';
     }
   }
 });
