@@ -1,4 +1,4 @@
-const acheronDate = new Date('March 28, 2024 04:00:00');
+const acheronDate = new Date('March 27, 2024 04:00:00');
 
 const image = {
     x: 0,
