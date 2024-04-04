@@ -23,7 +23,6 @@ input.addEventListener('change', async () => {
     }
 
     let hits = customer_data.filter(v => {
-        console.log(v['imie'])
         return v['imie'].toLowerCase().trim() == split_value[0].toLowerCase() && v['nazwisko'].toLowerCase().trim() == split_value[1].toLowerCase()
     });
 
@@ -38,14 +37,15 @@ input.addEventListener('change', async () => {
 
     for (let c of hits) {
         outputHTML += '<div class="wynik">' +
-        '<ul>' +
-            '<li>Imię: ' + c['imie'] + '</li>' + 
-            '<li>Nazwisko: ' + c['nazwisko'] + '</li>' +
-            '<li>Miasto: ' + c['miasto'] + '</li>' + 
-            '<li>Kod pocztowy: ' + c['kod_pocztowy'] + '</li>' +
-            '<li>Adres: ' + c['adres'] + '</li>' +
-            '<li>Numer telefonu: ' + c['numer_telefonu'] + '</li>' +
-        '</ul>' +
+            '<ul>' +
+                '<li>Imię: ' + c['imie'] + '</li>' + 
+                '<li>Nazwisko: ' + c['nazwisko'] + '</li>' +
+                '<li>Miasto: ' + c['miasto'] + '</li>' + 
+                '<li>Kod pocztowy: ' + c['kod_pocztowy'] + '</li>' +
+                '<li>Adres: ' + c['adres'] + '</li>' +
+                '<li>Numer telefonu: ' + '<a href="tel:' + c['numer_telefonu'] + '">' + c['numer_telefonu'] + '</li>' +
+            '</ul>' +
+        '</div>' +
         '<hr>';
     }
 
