@@ -43,7 +43,7 @@ input.addEventListener('change', async () => {
                 '<li>Miasto: ' + c['miasto'] + '</li>' + 
                 '<li>Kod pocztowy: ' + c['kod_pocztowy'] + '</li>' +
                 '<li>Adres: ' + c['adres'] + '</li>' +
-                '<li>Numer telefonu: ' + '<a href="tel:' + c['numer_telefonu'] + '">' + c['numer_telefonu'] + '</li>' +
+                '<li>Numer telefonu: ' + '<a href="tel:' + c['numer_telefonu'] + '">' + c['numer_telefonu'] + '</a></li>' +
             '</ul>' +
         '</div>' +
         '<hr>';
@@ -66,7 +66,7 @@ randomButton.addEventListener("click", () => {
             '<li>Miasto: ' + c['miasto'] + '</li>' + 
             '<li>Kod pocztowy: ' + c['kod_pocztowy'] + '</li>' +
             '<li>Adres: ' + c['adres'] + '</li>' +
-            '<li>Numer telefonu: ' + '<a href="tel:' + c['numer_telefonu'] + '">' + c['numer_telefonu'] + '</li>' +
+            '<li>Numer telefonu: ' + '<a href="tel:' + c['numer_telefonu'] + '">' + c['numer_telefonu'] + '</a></li>' +
         '</ul>' +
     '</div>' +
     '<hr>';
