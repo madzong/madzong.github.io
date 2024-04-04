@@ -24,7 +24,7 @@ input.addEventListener('change', async () => {
 
     let hits = customer_data.filter(v => {
         console.log(v['imie'])
-        return v['imie'].toLowerCase() == split_value[0].toLowerCase() && v['nazwisko'].toLowerCase() == split_value[1].toLowerCase()
+        return v['imie'].toLowerCase().trim() == split_value[0].toLowerCase() && v['nazwisko'].toLowerCase().trim() == split_value[1].toLowerCase()
     });
 
     console.log(hits);
@@ -50,4 +50,24 @@ input.addEventListener('change', async () => {
     }
 
     output.innerHTML = outputHTML;
+});
+
+const randomButton = document.getElementById("random");
+randomButton.addEventListener("click", () => {
+    const len = json['customers'].length;
+
+    const selectedIndex = Math.floor(Math.random() * (len - 1));
+    const c = json['customers'][selectedIndex];
+
+    output.innerHTML = '<div class="wynik">' +
+        '<ul>' +
+            '<li>Imię: ' + c['imie'] + '</li>' + 
+            '<li>Nazwisko: ' + c['nazwisko'] + '</li>' +
+            '<li>Miasto: ' + c['miasto'] + '</li>' + 
+            '<li>Kod pocztowy: ' + c['kod_pocztowy'] + '</li>' +
+            '<li>Adres: ' + c['adres'] + '</li>' +
+            '<li>Numer telefonu: ' + '<a href="tel:' + c['numer_telefonu'] + '">' + c['numer_telefonu'] + '</li>' +
+        '</ul>' +
+    '</div>' +
+    '<hr>';
 });
