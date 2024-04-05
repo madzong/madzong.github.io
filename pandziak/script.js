@@ -11,7 +11,7 @@ let json = {};
 const nameCollection = [];
 setTimeout(() => {
     for (const customer of json['customers']) {
-        nameCollection.push([customer['imie'], customer['nazwisko']]);
+        nameCollection.push([customer['imie'].toLowerCase(), customer['nazwisko'].toLowerCase()]);
     }
 }, 2e3);
 
@@ -23,7 +23,7 @@ przyciskWyszukiwanie.addEventListener('click', async () => {
     const customer_data = json['customers'];
     const value = input.value;
 
-    const split_value = value.trim().split(" ").filter(v => v != '');
+    const split_value = value.trim().toLowerCase().split(" ").filter(v => v != '');
 
     const indexes = [];
 
