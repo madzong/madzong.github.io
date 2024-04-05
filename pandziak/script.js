@@ -8,24 +8,44 @@ let json = {};
     json = await fetch('data.json').then(async (data) => data.json());
 })();
 
+const nameCollection = [];
+setTimeout(() => {
+    for (const customer of json['customers']) {
+        nameCollection.push([customer['imie'], customer['nazwisko']]);
+    }
+}, 2e3);
+
 const input = document.getElementById("wyszukiwarka");
 const output = document.getElementById("rezultaty");
+const przyciskWyszukiwanie = document.getElementById("wyszukaj");
 
-input.addEventListener('change', async () => {
+przyciskWyszukiwanie.addEventListener('click', async () => {
     const customer_data = json['customers'];
     const value = input.value;
 
-    const split_value = value.split(" ");
+    const split_value = value.trim().split(" ").filter(v => v != '');
 
-    if (split_value.length != 2) {
-        output.innerHTML = '<p style="color: red; font-weight: bold;">Brak wyników</p>';
-        return;
-    }
+    const indexes = [];
 
-    let hits = customer_data.filter(v => {
-        return v['imie'].toLowerCase().trim() == split_value[0].toLowerCase() && v['nazwisko'].toLowerCase().trim() == split_value[1].toLowerCase()
+    let hits = nameCollection.filter((v, i) => {
+        // [ 'name', 'lastname' ]
+        if (split_value.length == 1) {
+            if (v.includes(split_value[0])) {
+                indexes.push(i);
+                return true;
+            }
+        }
+        else if (split_value.length > 1) {
+            if (v.includes(split_value[0]) && v.includes(split_value[1])) {
+                indexes.push(i);
+                return true;
+            }
+        }
     });
 
+    hits = indexes;
+
+    console.log(indexes);
     console.log(hits);
 
     if (hits.length < 1) {
@@ -35,7 +55,9 @@ input.addEventListener('change', async () => {
 
     let outputHTML = "<h2>Wyniki:</h2>";
 
-    for (let c of hits) {
+    for (const index of hits) {
+        const c = customer_data[index];
+
         outputHTML += '<div class="wynik">' +
             '<ul>' +
                 '<li>Imię: ' + c['imie'] + '</li>' + 
