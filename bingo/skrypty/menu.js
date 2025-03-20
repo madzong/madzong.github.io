@@ -18,35 +18,36 @@ async function wyswietl() {
     }
   }
 
-  const custom_button = document.createElement("a");
+  const custom_button = document.createElement("div");
+  custom_button.innerText = "Custom";
   custom_button.classList.add("menu-entry");
   custom_button.addEventListener("click", () => {
     const dialog = document.createElement("dialog");
-    const form = document.createElement("form");
-    form.method = "GET";
-    form.action = "gra.html";
-    const label = document.createElement("label");
-    label.innerText = "Wpisz URL danych gry: ";
-    form.appendChild(label);
-    const input = document.createElement("input");
-    input.name = "nazwa";
-    input.type = "text";
-    form.appendChild(input);
-    const submit = document.createElement("input");
-    submit.type = "submit";
-    submit.value = "Ok";
-    form.appendChild(submit);
+    const cont = document.createElement("div");
+    dialog.appendChild(cont);
+    
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "https://motionvid.pl/Bingo/list_games.php");
+    xhr.addEventListener("load", function() {
+      const json = JSON.parse(this.responseText);
 
-    dialog.appendChild(form);
-    dialog.appendChild(document.createElement("hr"));
+      sessionStorage.setItem("games", json['games']);
+      for (let i = 0; i < json['games'].length; i++) {
+        const game_data = JSON.parse(atob(json['games'][i]));
+        
+        const btn = document.createElement("a");
+        btn.classList.add('menu-entry');
+        btn.innerText = game_data.name;
+        btn.href = 'game_custom.html?id=' + i;
 
-    const opis = document.createElement("p");
-    opis.id = "opis";
-    opis.innerText = "URL danych gry, to znaczy link do wygenerowanych wcześniej danych planszy, najłatwiej taki link można zrobyć wysyłając plik z danymi do gry na Discordzie i kopiując jego link.";
-    dialog.appendChild(opis);
+        cont.appendChild(btn);
+      }
+    });
+    xhr.send();
 
-    dialog.open = "open";
     document.body.appendChild(dialog);
+    dialog.showModal();
+    dialog.addEventListener('mousedown', function(e) { !e.target.closest('div') && this.remove() });
   });
   menuContainer.appendChild(custom_button);
 

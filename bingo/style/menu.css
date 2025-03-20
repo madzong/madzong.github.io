@@ -18,7 +18,7 @@ div#menu {
   flex-wrap: wrap;
 }
 
-a {
+.menu-entry {
   display: block;
   text-decoration: none;
   border: 2px solid black;
@@ -34,7 +34,7 @@ a {
   transition: cubic-bezier(.25, .1, 0, 1) scale 0.2s;
 }
 
-a:hover {
+.menu-entry:hover {
   scale: 1.1;
 
   transition: cubic-bezier(.25, .1, 0, 1) scale 0.2s;
@@ -46,22 +46,13 @@ dialog {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 1em;
   border: 2px solid black;
   border-radius: 8px;
 }
 
-dialog form {
-  padding: 0.5em;
-}
-
-form input[type="submit"] {
-  display: block;
-  padding: 0.5em 4em;
-  background-color: black;
-  border: 0;
-  color: white;
-  border-radius: 8px;
-  margin: auto;
-  margin-top: 1em;
+dialog div {
+  padding: 1em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }

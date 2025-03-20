@@ -46,13 +46,9 @@ function klikniecie(e, size) {
 }
 
 async function getData() {
-  if (!gra.startsWith("{")) {
-    const response = await fetch("data/" + gra);
-    const json = await response.json();
-    render(json);
-  } else {
-    render(JSON.parse(decodeURIComponent(gra)));
-  }
+  const response = await fetch("data/" + gra);
+  const json = await response.json();
+  render(json);
 }
 
 function render(daneGry) {
