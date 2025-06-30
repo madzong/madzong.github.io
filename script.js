@@ -9,6 +9,7 @@ const SPEED = 10;
 const dots = [];
 
 function genDots() {
+  dots.splice(0, dots.length);
   for (let x = 0; x < canvas.width; x += (MAX_RADIUS + PADDING) * 2) {
     for (let y = 0; y < canvas.height; y += (MAX_RADIUS + PADDING) * 2) {
       dots.push({
