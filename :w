@@ -1,0 +1,14 @@
+const windows = document.querySelectorAll(".window");
+const windowTitleBars = [];
+
+for (let i = 0; i < windows.length; i++) {
+  windowTitleBars.push(windows[i].querySelector("h1"));
+}
+
+function moveWindow(e) {
+}
+
+for (let i = 0; i < windowTitleBars.length; i++) {
+  const elem = windowTitleBars[i];
+  elem.addEventListener("mousedown", () => elem.addEventListener("mousemove", moveWindow));
+}

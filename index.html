@@ -1,17 +1,64 @@
 <!doctype html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Madzong</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="stylesheet" href="styles.css" />
-    </head>
-    <body>
-        <canvas id="bg"></canvas>
-        <main>
-            <h1>Test</h1>
-        </main>
+  <head>
+    <meta charset="utf-8" />
+    <title>Madzong</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <canvas id="bg"></canvas>
+    <main>
+      <section class="window">
+        <div class="window-frame">
+          <div class="window-title">
+            <img src="assets/icons/tree.png" />
+            <h1>Time</h1>
+          </div>
+          <div class="window-inner" id="time-window">
+            <div class="flex">
+              <div id="time1">
+                <h2>Current time for you</h2>
+                <canvas height="200" width="200"></canvas>
+                <p>00:00</p>
+              </div>
+              <div id="time2">
+                <h2>Current time for me</h2>
+                <canvas height="200" width="200"></canvas>
+                <p>00:00</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-        <script src="script.js"></script>
-    </body>
+      <section class="window">
+        <div class="window-frame">
+          <div class="window-title">
+            <img src="assets/icons/internet.png" />
+            <h1>Socials</h1>
+          </div>
+          <div class="window-inner flex" id="socials-window">
+            <button id="socials-github">
+              <img src="assets/icons/github.svg" />
+            </button>
+            <button id="socials-discord">
+              <img src="assets/icons/discord.svg" />
+            </button>
+            <button id="socials-instagram">
+              <img src="assets/icons/instagram.svg" />
+            </button>
+            <button id="socials-steam">
+              <img src="assets/icons/steam.svg" />
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="animation.js"></script>
+    <script type="module" src="windows.js"></script>
+    <script src="time_widget.js"></script>
+    <script type="module" src="socials.js"></script>
+  </body>
 </html>
