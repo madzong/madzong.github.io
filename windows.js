@@ -3,32 +3,40 @@ class ZController {
   #windows = [];
 
   addWindow(window) {
-    this.#windows.push([window, ++this.#zMax]);
-    window.zIndex = this.#zMax;
+    this.#windows.push(window);
+    window.zIndex = ++this.#zMax;
+    this.focus(window);
   }
 
   focus(window) {
-    const elem = this.#windows.find(e => e[0] === window);
-    const oldZ = elem[1];
+    const oldZ = window.zIndex;
     for (let i = 0; i < this.#windows.length; i++) {
-      if (oldZ < this.#windows[i][1]) {
-        this.#windows[i][0].zIndex = --this.#windows[i][1];
+      if (oldZ < this.#windows[i].zIndex) {
+        this.#windows[i].zIndex = --this.#windows[i].zIndex;
       }
-      this.#windows[i][0].isActive = false;
+      this.#windows[i].isActive = false;
     }
-
-    elem[1] = this.#zMax;
 
     window.zIndex = this.#zMax;
     window.isActive = true;
   }
+
+  removeWindow(window) {
+    this.#windows = this.#windows.filter(w => w !== window);
+    this.#zMax--;
+    this.focus(this.#windows.find(w => w.zIndex == this.#zMax));
+  }
+}
+
+function randRange(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
 }
 
 export class Window {
   #window;
   #title;
-  #x = 0;
-  #y = 0;
+  #x;
+  #y;
   #z;
   #offsetX;
   #offsetY;
@@ -38,9 +46,9 @@ export class Window {
   #isActive = true;
   #closeButton;
 
-  constructor(window, zController, closeButton) {
-    this.#window = window;
-    this.#title = window.querySelector(".window-title");
+  constructor(windowElem, zController, closeButton) {
+    this.#window = windowElem;
+    this.#title = this.#window.querySelector(".window-title");
 
     this.#borderSize = 
       this.#title.getBoundingClientRect().top - 
@@ -49,6 +57,7 @@ export class Window {
     this.#title.addEventListener("mousedown", this);
     this.#title.addEventListener("mouseup", this);
     document.addEventListener("mousemove", this);
+    this.#window.addEventListener("mousedown", this);
 
     this.#zController = zController;
     this.#zController.addWindow(this);
@@ -57,12 +66,24 @@ export class Window {
       this.#closeButton = closeButton;
       this.#closeButton.addEventListener("click", this);
     }
+
+    const style = getComputedStyle(this.#window);
+    
+    this.#x = randRange(0, window.innerWidth - parseInt(style.width));
+    this.#y = randRange(0, window.innerHeight - parseInt(style.height));
+
+    this.#window.style.left = `${this.#x}px`;
+    this.#window.style.top = `${this.#y}px`;
   }
 
   handleEvent(e) {
     switch (e.type) {
       case "mousedown":
-        this.moveStartHandler(e);
+        if (e.target === this.#title) {
+          this.moveStartHandler(e);
+        } else {
+          this.#zController.focus(this);
+        }
         break;
       case "mouseup":
         this.moveEndHandler();
@@ -85,6 +106,24 @@ export class Window {
 
       this.#window.style.left = `${this.#x}px`;
       this.#window.style.top = `${this.#y}px`;
+      const style = getComputedStyle(this.#window);
+
+      if (parseInt(style.left) < 0) {
+        this.#x = 0;
+        this.#window.style.left = `${this.#x}px`;
+      }
+      if (parseInt(style.top) < 0) {
+        this.#y = 0;
+        this.#window.style.top = `${this.#y}px`;
+      }
+      if (parseInt(style.right) < 0) {
+        this.#x = window.innerWidth - parseInt(style.width);
+        this.#window.style.left = `${this.#x}px`;
+      }
+      if (parseInt(style.bottom) < 0) {
+        this.#y = window.innerHeight - parseInt(style.height);
+        this.#window.style.top = `${this.#y}px`;
+      }
     }
   }
 
@@ -128,7 +167,48 @@ export class Window {
   }
 
   close() {
+    this.#zController.removeWindow(this);
     this.#window.remove();
+  }
+
+  static createWindow(title, content, zController, hasCloseButton, icon) {
+    const window = document.createElement("section");
+    window.classList.add("window");
+
+    const windowFrame = document.createElement("div");
+    windowFrame.classList.add("window-frame");
+    window.appendChild(windowFrame);
+
+    const windowTitle = document.createElement("div");
+    windowTitle.classList.add("window-title");
+    windowFrame.appendChild(windowTitle);
+
+    if (icon) {
+      const titleImage = document.createElement("img");
+      titleImage.src = icon;
+      windowTitle.appendChild(titleImage);
+    }
+
+    const titleText = document.createElement("h1");
+    titleText.innerText = title;
+    windowTitle.appendChild(titleText);
+    
+    let exitButton = undefined;
+    if (hasCloseButton) {
+      exitButton = document.createElement("button");
+      exitButton.innerText = "X";
+      windowTitle.appendChild(exitButton);
+    }
+
+    const windowInner = document.createElement("div");
+    windowInner.classList.add("window-inner");
+    windowFrame.appendChild(windowInner);
+
+    windowInner.appendChild(content);
+
+    document.querySelector("main").appendChild(window);
+
+    new Window(window, zController, exitButton);
   }
 }
 
