@@ -1,0 +1,32 @@
+[package]
+name = "wgpu-web"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+wgpu = "30"
+winit = "0.30"
+log = "0.4"
+web-time = "1"
+bytemuck = { version = "1.25.2", features = ["derive"] }
+image = { version = "0.25.10", default-features = false, features = ["png"] }
+js-sys = "0.3.106"
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+env_logger = "0.11"
+pollster = "1"
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+# WebGL2 fallback for browsers without WebGPU.
+wgpu = { version = "30", features = ["webgl"] }
+# Pinned: must match wasm-bindgen-cli in flake.nix.
+wasm-bindgen = "=0.2.129"
+wasm-bindgen-futures = "0.4"
+web-sys = { version = "0.3", features = ["Document", "Window", "Element", "HtmlCanvasElement", "Response"] }
+console_error_panic_hook = "0.1"
+console_log = "1"
+
+[profile.release]
+opt-level = "s"
+lto = true
+codegen-units = 1
